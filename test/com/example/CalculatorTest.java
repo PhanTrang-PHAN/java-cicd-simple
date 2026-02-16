@@ -1,44 +1,74 @@
 package com.example;
 
-public class Calculator {
+import org.junit.*;
+import static org.junit.Assert.*;
 
-    // Phép cộng
-    public int add(int a, int b) {
-        return a + b;
+public class CalculatorTest {
+
+    private Calculator calculator;
+
+    // Chạy trước mỗi test
+    @Before
+    public void setUp() {
+        calculator = new Calculator();
+        System.out.println("Bắt đầu test...");
     }
 
-    // Phép trừ
-    public int subtract(int a, int b) {
-        return a - b;
+    // Chạy sau mỗi test
+    @After
+    public void tearDown() {
+        calculator = null;
+        System.out.println("Kết thúc test...");
     }
 
-    // Phép nhân
-    public int multiply(int a, int b) {
-        return a * b;
+    // Test phép cộng
+    @Test
+    public void testAdd() {
+        System.out.println("Test phép cộng");
+        assertEquals(5, calculator.add(2, 3));
+        assertEquals(0, calculator.add(-1, 1));
+        assertEquals(-5, calculator.add(-2, -3));
     }
 
-    // Phép chia
-    public int divide(int a, int b) {
-        if (b == 0) {
-            throw new IllegalArgumentException("Không thể chia cho 0");
-        }
-        return a / b;
+    // Test phép trừ
+    @Test
+    public void testSubtract() {
+        System.out.println("Test phép trừ");
+        assertEquals(2, calculator.subtract(5, 3));
+        assertEquals(-2, calculator.subtract(3, 5));
+        assertEquals(0, calculator.subtract(0, 0));
     }
 
-    // Kiểm tra số chẵn
-    public boolean isEven(int number) {
-        return number % 2 == 0;
+    // Test phép nhân
+    @Test
+    public void testMultiply() {
+        System.out.println("Test phép nhân");
+        assertEquals(15, calculator.multiply(3, 5));
+        assertEquals(0, calculator.multiply(5, 0));
+        assertEquals(-6, calculator.multiply(-2, 3));
     }
 
-    // Main method để chạy thử
-    public static void main(String[] args) {
-        Calculator calc = new Calculator();
+    // Test phép chia
+    @Test
+    public void testDivide() {
+        System.out.println("Test phép chia");
+        assertEquals(2, calculator.divide(10, 5));
+        assertEquals(3, calculator.divide(9, 3));
+    }
 
-        System.out.println("=== DEMO CALCULATOR ===");
-        System.out.println("5 + 3 = " + calc.add(5, 3));
-        System.out.println("5 - 3 = " + calc.subtract(5, 3));
-        System.out.println("5 * 3 = " + calc.multiply(5, 3));
-        System.out.println("6 / 3 = " + calc.divide(6, 3));
-        System.out.println("7 có phải số chẵn? " + calc.isEven(7));
+    // Test chia cho 0 (mong đợi lỗi)
+    @Test(expected = IllegalArgumentException.class)
+    public void testDivideByZero() {
+        System.out.println("Test chia cho 0");
+        calculator.divide(10, 0);
+    }
+
+    // Test số chẵn
+    @Test
+    public void testIsEven() {
+        System.out.println("Test số chẵn");
+        assertTrue(calculator.isEven(2));
+        assertTrue(calculator.isEven(0));
+        assertFalse(calculator.isEven(3));
     }
 }

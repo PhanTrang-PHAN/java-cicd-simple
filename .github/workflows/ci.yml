@@ -1,0 +1,66 @@
+name: CI Pipeline - Bài 6
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build và Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Lấy code từ GitHub
+        uses: actions/checkout@v3
+
+      - name: ☕ Cài đặt Java 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: 📂 Xem cấu trúc thư mục
+        run: |
+          echo "=== CẤU TRÚC THƯ MỤC ==="
+          ls -la
+          echo ""
+          echo "=== THƯ MỤC SRC ==="
+          ls -la src/com/example/ || echo "Không tìm thấy src/com/example/"
+          echo ""
+          echo "=== THƯ MỤC TEST ==="
+          ls -la test/com/example/ || echo "Không tìm thấy test/com/example/"
+          echo ""
+          echo "=== THƯ MỤC LIB ==="
+          ls -la lib/ || echo "Không tìm thấy lib/"
+
+      - name: 📁 Tạo thư mục output
+        run: |
+          mkdir -p out
+          mkdir -p test-out
+
+      - name: 🔨 Biên dịch code chính
+        run: |
+          echo "Đang biên dịch code chính..."
+          javac -cp "lib/*" -d out src/com/example/*.java
+          echo "✅ Biên dịch code chính thành công"
+
+      - name: 🔧 Biên dịch test
+        run: |
+          echo "Đang biên dịch test..."
+          javac -cp "lib/*:out" -d test-out test/com/example/*.java
+          echo "✅ Biên dịch test thành công"
+
+      - name: 🧪 Chạy test
+        run: |
+          echo "Đang chạy test..."
+          java -cp "lib/*:out:test-out" org.junit.runner.JUnitCore com.example.CalculatorTest
+          echo "✅ Tất cả test passed!"
+
+      - name: 📦 Đóng gói ứng dụng
+        if: success()
+        run: |
+          echo "Đang đóng gói..."
+          jar -cf calculator-bai6.jar -C out .
+          echo "✅ Đã tạo file calculator-bai6.jar"
