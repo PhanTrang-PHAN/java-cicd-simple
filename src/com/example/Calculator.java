@@ -24,7 +24,10 @@ public class Calculator {
         }
         return a / b;
     }
-
+    // them method  t2
+    public int square(int x) {
+        return x * x;
+    }
     // Kiểm tra số chẵn
     public boolean isEven(int number) {
         return number % 2 == 0;

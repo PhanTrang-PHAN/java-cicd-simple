@@ -71,4 +71,11 @@ public class CalculatorTest {
         assertTrue(calculator.isEven(0));
         assertFalse(calculator.isEven(3));
     }
+    @Test
+    public void testSquare() {
+        System.out.println("Test tính bình phương");
+        assertEquals(25, calculator.square(5));
+        assertEquals(0, calculator.square(0));
+        assertEquals(9, calculator.square(-3));
+    }
 }
