@@ -78,4 +78,10 @@ public class CalculatorTest {
         assertEquals(0, calculator.square(0));
         assertEquals(9, calculator.square(-3));
     }
+    @Test
+    public void testMax() {
+        System.out.println("Test tìm số lớn nhất");
+        assertEquals(9, calculator.max(5, 9, 3));
+        assertEquals(5, calculator.max(5, 5, 5));
+    }
 }

@@ -28,12 +28,16 @@ public class Calculator {
     public int square(int x) {
         return x * x;
     }
+    // Thêm method t3
+    public int max(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
     // Kiểm tra số chẵn
     public boolean isEven(int number) {
         return number % 2 == 0;
     }
 
-    // Main method để chạy thử
+    // Main method để test
     public static void main(String[] args) {
         Calculator calc = new Calculator();
 
